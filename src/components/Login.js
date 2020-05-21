@@ -155,7 +155,7 @@ handlePasswordChange = (event) =>{
                     <Paper style={style.Paper1}>
                         <div >
                             <Title1>Data Lineage-Summary</Title1>
-                            <h3 align='justify'>Data lineage is defined as a data life cycle that includes the data's origins and where it moves over time. It describes what happens to data as it goes through diverse processes. It helps provide visibility into the analytics pipeline and simplifies tracing errors back to their sources.</h3>
+                            <h3 align='justify'>Data lineage is defined as a data life cycle that includes the datas origins and where it moves over time. It describes what happens to data as it goes through diverse processes. It helps provide visibility into the analytics pipeline and simplifies tracing errors back to their sources.</h3>
                             <img src={DL} alt="DL" />  
                             <br />
                             <br />
