@@ -9,6 +9,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "concurrently": "^5.2.0",
+    "express": "^4.17.1",
     "match-sorter": "^4.1.0",
     "material-datatable": "^0.4.1",
     "material-ui": "^0.20.2",
@@ -29,14 +30,12 @@
     "simple-excel-to-json": "^2.2.1",
     "styled-components": "^5.1.0"
   },
+  "main": "index.js",
   "scripts": {
-    "start": "REACT_APP_ENV=dev react-scripts start",
+    "start": "node index",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start-frontend": "npm run start-dev --prefix ../front-end/",
-    "start-backend": "npm run start-dev --prefix ../back-end/",
-    "start-all": "concurrently \"npm run start-frontend\" \"npm run start-backend\" "
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
