@@ -15,8 +15,10 @@ const dev = {
 let config = "";
 
 if (process.env.REACT_APP_ENV === "dev") {
+	console.log('we saw dev');
   config = dev;
-} else {
+} else if (process.env.REACT_APP_ENV === 'oc') {
+  console.log('we saw oc');
   config = oc;
 }
 
