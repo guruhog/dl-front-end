@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Nvt from "../Nvt.png";
 import './style.css'
 import auth from "./auth";
+import config from "../config";
 
 const theme = {
     blue: {
@@ -133,7 +134,7 @@ class Test1 extends Component {
     }
     clickHandlerField= () =>{
 
-        const url="http://localhost:8001/";
+        const url=`${config.url.BACKEND_API1}`;
         fetch(url, {
             method:"GET"
         }).then(reponse => reponse.json()).then(posts =>{
@@ -177,7 +178,7 @@ class Test1 extends Component {
     }
 
     clickHandlerEntity= () =>{
-        const url="http://localhost:8001/";
+        const url=`${config.url.BACKEND_API1}`;
         fetch(url, {
             method:"GET"
         }).then(reponse => reponse.json()).then(posts =>{
@@ -213,7 +214,7 @@ class Test1 extends Component {
     }
     
     clickHandlerApplication= () =>{
-        const url="http://localhost:8001/";
+        const url=`${config.url.BACKEND_API1}`;
         fetch(url, {
             method:"GET"
         }).then(reponse => reponse.json()).then(posts =>{
