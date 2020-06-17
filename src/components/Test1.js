@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Nvt from "../Nvt.png";
 import './style.css'
-import auth from "./auth";
 import config from "../config";
 
 const theme = {
@@ -23,7 +22,7 @@ const theme = {
   };
 
 
-
+//Field, Application & Entity- switching button styling
   const Button = styled.button`
   background-color: ${props => theme[props.theme].default};
   color: white;
@@ -43,18 +42,21 @@ const theme = {
   }
 `;
 
+// Header Content Area Styling
 const Wrapper1 = styled.section`
   background-color: #3b5998;
   //padding-bottom: 0.1em;
   margin-bottom: 0px;
   `;
 
+// NOVARTIS Image position styling
   const Wrapper11 = styled.section`
   float: right;
   margin-top: -90px;
   margin-right: 25px;
   `;
 
+//Sub-Header styling
 const Wrapper3 = styled.section`
 padding-top: 2.5em;
 margin-top: -30px;
@@ -63,8 +65,7 @@ padding-bottom: 35px;
 //   border-bottom: 1px solid black;
 `;
 
-
-
+// Heading Content text styling
 const Title = styled.h1`
 font-size: 2.5em;
 font-family: Sylfaen;
@@ -76,6 +77,8 @@ font-family: Sylfaen;
   margin-left: 20px;
   color: white;
 `;
+
+//Page Information styling
 const Context= styled.p`
 font-size: 1.0em;
 font: Arial;
@@ -90,7 +93,7 @@ font-weight:bold;
 
 `;
 
-
+//Search Information styling
 const Disclaimer= styled.p`
 font-size: 1em;
 font: Arial;
@@ -104,6 +107,7 @@ font: Arial;
 
 `;
 
+//React Table styling
 const Styles = styled.div`
   padding: 1em;
   margin-top:10px;
@@ -125,12 +129,12 @@ class Test1 extends Component {
         super(props)
     
         this.state = {
-            columns :[] ,
-            message :[],
+            columns :[] , //To store heading of columns of the table.
+            message :[],  // To store content of table.
         }
     }
     componentDidMount(){
-        this.clickHandlerField();
+        this.clickHandlerField(); //By Default display the field details in the table.
     }
     clickHandlerField= () =>{
 
@@ -146,7 +150,7 @@ class Test1 extends Component {
                 {
                     Header:"ID",
                     accessor:"ID",
-                    filterMethod: (filter, rows) =>
+                    filterMethod: (filter, rows) => // For searching in the particular column. 
                         matchSorter(rows, filter.value, { keys: ["ID"] }),
                     filterAll: true,width: 90,
                     
@@ -172,12 +176,13 @@ class Test1 extends Component {
                         matchSorter(rows, filter.value, { keys: ["DH_Attribute_Name"] }),
                     filterAll: true,
                     Cell: ( {row} ) => (<Link to={{pathname:`/${row.DH_Attribute_Name}/field/${row.DH_Entity_Name}` } }>{row.DH_Attribute_Name}</Link>)
+                    //Making the attribute name "clickable" so that when it gets clicked it redirects to next page containing specific details of attribute. 
                 }
             ]
         })
     }
 
-    clickHandlerEntity= () =>{
+    clickHandlerEntity= () =>{ //Function that gets called when entity button is clicked, fetches all the entity data and display it in the table.
         const url=`${config.url.BACKEND_API1}`;
         fetch(url, {
             method:"GET"
@@ -213,7 +218,7 @@ class Test1 extends Component {
         })
     }
     
-    clickHandlerApplication= () =>{
+    clickHandlerApplication= () =>{ //Function that gets called when application button is clicked, fetches all the application data and display it in the table.
         const url=`${config.url.BACKEND_API1}`;
         fetch(url, {
             method:"GET"
@@ -260,15 +265,14 @@ class Test1 extends Component {
             <div >
                 <Wrapper1><Title>Data Lineage</Title></Wrapper1>
                 <Wrapper11><img src={Nvt} alt="NVT"/><br />
-                <button class="btn btn-primary " style={style.butl}
+                <button class="btn btn-primary " style={style.butl} //Logout Button
                     onClick={() => {
-                    auth.logout(() => {
-                        this.props.history.push("/");});}}>Logout
+                        this.props.history.push("/");}}>Logout
                 </button>
                 
                 </Wrapper11>
                 
-                
+{/* Field,Entity,Application Button */}
                 <Wrapper3>
                 
                 <Button onClick={this.clickHandlerField}>FIELD</Button> {' '}
@@ -277,6 +281,7 @@ class Test1 extends Component {
                 <Context>The site will help you find the lineage modelling of various Fields, Entities and Applications.</Context>
                 </Wrapper3>
                  
+{/*React Table displaying entity,field,application */}    
                 <Grid item xs={15}>
                         <Paper style={style.Paper}>
                         <Disclaimer>Search in Indivdual Search bars of Each Column</Disclaimer>

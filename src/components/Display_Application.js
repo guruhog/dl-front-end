@@ -24,20 +24,23 @@ import config from "../config";
 import Tooltip from "rc-tooltip";
 import "rc-tooltip/assets/bootstrap.css";
 
+// Header Content Area Styling
 const Wrapper1 = styled.section`
   background-color: #3b5998;
   padding-bottom: 0.1em;
-`;
+  `;
 
-const Wrapper11 = styled.section`
+// NOVARTIS Image position styling
+ const Wrapper11 = styled.section`
   float: right;
   margin-top: -70px;
   margin-right: 25px;
-`;
+  `;
 
+// Heading Content text styling
 const Title = styled.h1`
-  font-size: 2.5em;
-  font-family: Sylfaen;
+font-size: 2.5em;
+font-family: Sylfaen;
   text-align: left;
   text-shadow: 2px 4px 2px #000;
   margin-top: 0.3%;
@@ -45,7 +48,8 @@ const Title = styled.h1`
   color: white;
 `;
 
-const Context = styled.p`
+//Page Information styling
+const Context= styled.p`
 font-size: 1.0em;
 font: Arial;
 text-shadow: 4px 3px 2px #000;
@@ -58,52 +62,56 @@ text-shadow: 4px 3px 2px #000;
 
 `;
 
+//Setting parameters of every node in the tree structure
 const svgSquare = {
-  x: 500,
-  y: 50,
-  shape: "circle",
-  shapeProps: { r: 10 }
-};
+  x: 500, y: 50,
+  shape:'circle',
+  shapeProps: {r: 10,}
+}
 
-const options = {
-  //Setting parameters for Information Context box
-  responsive: "scroll",
-  pagination: false,
-  sort: false,
-  sortFilterList: false,
-  filter: false,
-  viewColumns: false,
-  selectableRows: "none",
-  print: false
-};
+//Setting parameters for Information Context box
+const options = {                             
+    responsive: "scroll",
+    pagination: false,
+    sort:false,
+    sortFilterList:false,
+    filter:false,
+    viewColumns:false,
+    selectableRows:"none",
+    print:false
+  };
 
+//Setting parameter for the full screen Data Lineage
 const styleModal = {
-  overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.66)",
-    zIndex: 10000
-  },
-  content: {
-    backgroundColor: "#dfe3ee"
-  }
-};
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.66)",
+      zIndex: 10000
+    },
+    content:{
+        backgroundColor: "#dfe3ee",
+    }
+    
+  };
 
 class Display_Application extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      displayArray: [],
-      data1: [
+      displayArray: [],   //For Displaying the content of Information Context.
+      data1: [            //For Displaying the tree structure.
         {
           name: ""
         }
       ],
-      translate: {}, //For adjusting the location of tree.
-      isOpen: false //For modal display.
+      translate: {},      //For adjusting the location of tree.
+      translateModal:{},
+      isOpen: false       //For modal display.
     };
   }
 
   componentDidMount() {
+    //Fetching the content of Informaton Context & tree structure for Data Lineage
     const url = `${config.url.BACKEND_API1}/${this.props.match.params.id}/${this.props.match.params.id}/${this.props.match.params.id}`;
     fetch(url, {
       method: "GET"
@@ -120,20 +128,26 @@ class Display_Application extends Component {
       .then(booksList => {
         this.setState({ data1: booksList });
       });
-
-    const dimensions = this.treeContainer.getBoundingClientRect(); //For positioning the tree
+    //For positioning the tree
+    const dimensions = this.treeContainer.getBoundingClientRect();
     this.setState({
       translate: {
-        x: dimensions.width / 16,
+        x: dimensions.width / 8,
         y: dimensions.height / 2
       }
     });
+    this.setState({
+      translateModal: {
+          x: dimensions.width /4,
+          y: dimensions.height / 1.8
+      }
+      });
   }
 
   handleOpenModal = () => {
     this.setState({ isOpen: !this.state.isOpen });
   };
-
+  //Setting the color of Information Context Box.
   getMuiTheme = () =>
     createMuiTheme({
       overrides: {
@@ -155,6 +169,7 @@ class Display_Application extends Component {
     });
 
   render() {
+    //Setting the data for Information Context
     const data = [
       ["Application_Name", this.state.displayArray[0]],
       ["Application_Clarity_ID", this.state.displayArray[1]],
@@ -167,7 +182,7 @@ class Display_Application extends Component {
       ["Active_Status", this.state.displayArray[8]],
       ["Comments", this.state.displayArray[9]]
     ];
-
+    //Setting the headers for Information Context table.
     const columns = [{}, {}];
     const style = {
       Paper_Information_Context: {
@@ -193,8 +208,9 @@ class Display_Application extends Component {
         <Wrapper11>
           <img src={Nvt} alt="NVT" />
         </Wrapper11>
-
+{/* Grid to divide page in two halves */}
         <Grid container spacing={5}>
+    {/* First half of page displaying Information Context */}
           <Grid item xs={5}>
             <Paper style={style.Paper_Information_Context}>
               <MuiThemeProvider theme={this.getMuiTheme()}>
@@ -208,6 +224,8 @@ class Display_Application extends Component {
               <h4 />
             </Paper>
           </Grid>
+        
+    {/* Second half of page displaying Data Lineage Tree */}
           <Grid item xs={7}>
             <Paper style={style.Paper_Data_Lineage}>
               <h3>DATA LINEAGE</h3>
@@ -215,6 +233,7 @@ class Display_Application extends Component {
                 <Tooltip overlay="Full Screen" placement="top">
                   <FaExpand className="icon" size={40} />
                 </Tooltip>
+        {/* Modal Component to display tree structure in full screen */}  
               </div>
               <Modal
                 isOpen={this.state.isOpen}
@@ -233,8 +252,8 @@ class Display_Application extends Component {
                     data={this.state.data1}
                     nodeSize={svgSquare}
                     nodeSvgShape={svgSquare}
-                    translate={this.state.translate}
-                    zoom={0.9}
+                    translate={this.state.translateModal}
+                    zoom={0.6}
                   />
                 </div>
               </Modal>
@@ -262,26 +281,3 @@ class Display_Application extends Component {
 }
 
 export default Display_Application;
-
-// componentDidMount(){
-//   const url=`http://localhost:8001/${this.props.match.params.id}/${this.props.match.params.id}/${this.props.match.params.id}`;
-//   fetch(url, {
-//       method:"GET"
-//   }).then(reponse => reponse.json()).then(posts =>{
-//       this.setState({displayArray:posts})
-//   })
-
-//   fetch(`http://localhost:8002/application/name=/${this.props.match.params.id}`)
-//   .then((reponse) => reponse.json())
-//   .then(booksList => {
-//       this.setState({data1:booksList});
-//   });
-
-//   const dimensions = this.treeContainer.getBoundingClientRect();  //For positioning the tree
-//   this.setState({
-//   translate: {
-//       x: dimensions.width /16,
-//       y: dimensions.height / 2
-//   }
-//   });
-// }

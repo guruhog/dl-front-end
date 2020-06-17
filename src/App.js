@@ -2,10 +2,8 @@ import React,{ useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router,Switch,Route } from 'react-router-dom';
-import MaterialUI from './components/MaterialUI'
 import Login from './components/Login.js'
 
-import { ProtectedRoute } from "./components/protected.route";
 import ReactDOM from "react-dom";
 
 import Test1 from './components/Test1.js'
@@ -18,7 +16,7 @@ function App() {
       <div className="App">
         <Switch>
           <Route path='/'exact component={Login} />
-          <ProtectedRoute exact path="/Login" component={Test1} />
+          <Route exact path="/Login" component={Test1} />
           <Route path='/entity/:id'exact component={Display_Entity} />
           <Route path='/:id1/field/:id2'exact component={Display_Attribute} />
           <Route path='/application/:id'exact component={Display_Application} />
