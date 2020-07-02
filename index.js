@@ -11,8 +11,11 @@ app.use(bodyParser.json({ limit: '1000mb' }));
 
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('/', function(_, res) {
+app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  if (err) {
+    res.status(500).send(err)
+  }
 });
 
 const PORT = '8080';
